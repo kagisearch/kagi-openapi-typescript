@@ -22,22 +22,22 @@ export interface TokenProvider {
 }
 
 /**
- * Applies apiKey authentication to the request context.
+ * Applies http authentication to the request context.
  */
 export class KagiAuthentication implements SecurityAuthentication {
     /**
-     * Configures this api key authentication with the necessary properties
+     * Configures the http authentication with the required details.
      *
-     * @param apiKey: The api key to be used for every request
+     * @param tokenProvider service that can provide the up-to-date token when needed
      */
-    public constructor(private apiKey: string) {}
+    public constructor(private tokenProvider: TokenProvider) {}
 
     public getName(): string {
         return "kagi";
     }
 
-    public applySecurityAuthentication(context: RequestContext) {
-        context.setHeaderParam("Authorization", this.apiKey);
+    public async applySecurityAuthentication(context: RequestContext) {
+        context.setHeaderParam("Authorization", "Bearer " + await this.tokenProvider.getToken());
     }
 }
 
@@ -75,7 +75,7 @@ export type HttpSignatureConfiguration = unknown; // TODO: Implement
 
 export type AuthMethodsConfiguration = {
     "default"?: SecurityAuthentication,
-    "kagi"?: ApiKeyConfiguration,
+    "kagi"?: HttpBearerConfiguration,
     "kagi-translate"?: HttpBearerConfiguration
 }
 
@@ -93,7 +93,7 @@ export function configureAuthMethods(config: AuthMethodsConfiguration | undefine
 
     if (config["kagi"]) {
         authMethods["kagi"] = new KagiAuthentication(
-            config["kagi"]
+            config["kagi"]["tokenProvider"]
         );
     }
 
