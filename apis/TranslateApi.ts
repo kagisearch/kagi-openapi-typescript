@@ -10,7 +10,7 @@ import {canConsumeForm, isCodeInRange} from '../util';
 import {SecurityAuthentication} from '../auth/auth';
 
 
-import { ExampleError } from '../models/ExampleError';
+import { ErrorEnvelope } from '../models/ErrorEnvelope';
 import { Translate200Response } from '../models/Translate200Response';
 import { Translate400Response } from '../models/Translate400Response';
 import { Translate500Response } from '../models/Translate500Response';
@@ -665,11 +665,11 @@ export class TranslateApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("401", response.httpStatusCode)) {
-            const body: ExampleError = ObjectSerializer.deserialize(
+            const body: ErrorEnvelope = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "ExampleError", ""
-            ) as ExampleError;
-            throw new ApiException<ExampleError>(response.httpStatusCode, "Access token is missing or invalid", body, response.headers);
+                "ErrorEnvelope", ""
+            ) as ErrorEnvelope;
+            throw new ApiException<ErrorEnvelope>(response.httpStatusCode, "Access token is missing or invalid", body, response.headers);
         }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml

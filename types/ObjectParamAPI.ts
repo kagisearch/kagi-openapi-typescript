@@ -3,12 +3,16 @@ import { Configuration, ConfigurationOptions } from '../configuration'
 import type { Middleware } from '../middleware';
 
 import { EnrichSearch200Response } from '../models/EnrichSearch200Response';
-import { ExampleError } from '../models/ExampleError';
-import { ExampleErrorError } from '../models/ExampleErrorError';
+import { ErrorDetail } from '../models/ErrorDetail';
+import { ErrorEnvelope } from '../models/ErrorEnvelope';
+import { ExtractRequest } from '../models/ExtractRequest';
+import { ExtractResponse } from '../models/ExtractResponse';
 import { FastGPT200Response } from '../models/FastGPT200Response';
 import { FastGPT200ResponseData } from '../models/FastGPT200ResponseData';
 import { FastGPTRequest } from '../models/FastGPTRequest';
 import { Meta } from '../models/Meta';
+import { PageInput } from '../models/PageInput';
+import { PageOutput } from '../models/PageOutput';
 import { Search200Response } from '../models/Search200Response';
 import { Search200ResponseData } from '../models/Search200ResponseData';
 import { SearchObject } from '../models/SearchObject';
@@ -102,6 +106,45 @@ export class ObjectEnrichmentApi {
      */
     public enrichSearch(param: EnrichmentApiEnrichSearchRequest, options?: ConfigurationOptions): Promise<EnrichSearch200Response> {
         return this.api.enrichSearch(param.q, param.type,  options).toPromise();
+    }
+
+}
+
+import { ObservableExtractApi } from "./ObservableAPI";
+import { ExtractApiRequestFactory, ExtractApiResponseProcessor} from "../apis/ExtractApi";
+
+export interface ExtractApiExtractContentRequest {
+    /**
+     * 
+     * @type ExtractRequest
+     * @memberof ExtractApiextractContent
+     */
+    extractRequest: ExtractRequest
+}
+
+export class ObjectExtractApi {
+    private api: ObservableExtractApi
+
+    public constructor(configuration: Configuration, requestFactory?: ExtractApiRequestFactory, responseProcessor?: ExtractApiResponseProcessor) {
+        this.api = new ObservableExtractApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * Extracts markdown content from up to 10 HTTP(s) URLs. Each URL is processed and the extracted content is returned in the response. 
+     * Extract page content as markdown from URLs
+     * @param param the request object
+     */
+    public extractContentWithHttpInfo(param: ExtractApiExtractContentRequest, options?: ConfigurationOptions): Promise<HttpInfo<ExtractResponse>> {
+        return this.api.extractContentWithHttpInfo(param.extractRequest,  options).toPromise();
+    }
+
+    /**
+     * Extracts markdown content from up to 10 HTTP(s) URLs. Each URL is processed and the extracted content is returned in the response. 
+     * Extract page content as markdown from URLs
+     * @param param the request object
+     */
+    public extractContent(param: ExtractApiExtractContentRequest, options?: ConfigurationOptions): Promise<ExtractResponse> {
+        return this.api.extractContent(param.extractRequest,  options).toPromise();
     }
 
 }

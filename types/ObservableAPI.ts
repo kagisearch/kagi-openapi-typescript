@@ -4,12 +4,16 @@ import type { Middleware } from '../middleware';
 import { Observable, of, from } from '../rxjsStub';
 import {mergeMap, map} from  '../rxjsStub';
 import { EnrichSearch200Response } from '../models/EnrichSearch200Response';
-import { ExampleError } from '../models/ExampleError';
-import { ExampleErrorError } from '../models/ExampleErrorError';
+import { ErrorDetail } from '../models/ErrorDetail';
+import { ErrorEnvelope } from '../models/ErrorEnvelope';
+import { ExtractRequest } from '../models/ExtractRequest';
+import { ExtractResponse } from '../models/ExtractResponse';
 import { FastGPT200Response } from '../models/FastGPT200Response';
 import { FastGPT200ResponseData } from '../models/FastGPT200ResponseData';
 import { FastGPTRequest } from '../models/FastGPTRequest';
 import { Meta } from '../models/Meta';
+import { PageInput } from '../models/PageInput';
+import { PageOutput } from '../models/PageOutput';
 import { Search200Response } from '../models/Search200Response';
 import { Search200ResponseData } from '../models/Search200ResponseData';
 import { SearchObject } from '../models/SearchObject';
@@ -110,6 +114,58 @@ export class ObservableEnrichmentApi {
      */
     public enrichSearch(q: string, type: 'news' | 'web', _options?: ConfigurationOptions): Observable<EnrichSearch200Response> {
         return this.enrichSearchWithHttpInfo(q, type, _options).pipe(map((apiResponse: HttpInfo<EnrichSearch200Response>) => apiResponse.data));
+    }
+
+}
+
+import { ExtractApiRequestFactory, ExtractApiResponseProcessor} from "../apis/ExtractApi";
+export class ObservableExtractApi {
+    private requestFactory: ExtractApiRequestFactory;
+    private responseProcessor: ExtractApiResponseProcessor;
+    private configuration: Configuration;
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: ExtractApiRequestFactory,
+        responseProcessor?: ExtractApiResponseProcessor
+    ) {
+        this.configuration = configuration;
+        this.requestFactory = requestFactory || new ExtractApiRequestFactory(configuration);
+        this.responseProcessor = responseProcessor || new ExtractApiResponseProcessor();
+    }
+
+    /**
+     * Extracts markdown content from up to 10 HTTP(s) URLs. Each URL is processed and the extracted content is returned in the response. 
+     * Extract page content as markdown from URLs
+     * @param extractRequest
+     */
+    public extractContentWithHttpInfo(extractRequest: ExtractRequest, _options?: ConfigurationOptions): Observable<HttpInfo<ExtractResponse>> {
+        const _config = mergeConfiguration(this.configuration, _options);
+
+        const requestContextPromise = this.requestFactory.extractContent(extractRequest, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of _config.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => _config.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of _config.middleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.extractContentWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Extracts markdown content from up to 10 HTTP(s) URLs. Each URL is processed and the extracted content is returned in the response. 
+     * Extract page content as markdown from URLs
+     * @param extractRequest
+     */
+    public extractContent(extractRequest: ExtractRequest, _options?: ConfigurationOptions): Observable<ExtractResponse> {
+        return this.extractContentWithHttpInfo(extractRequest, _options).pipe(map((apiResponse: HttpInfo<ExtractResponse>) => apiResponse.data));
     }
 
 }

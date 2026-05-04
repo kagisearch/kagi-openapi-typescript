@@ -1,10 +1,14 @@
 export * from '../models/EnrichSearch200Response';
-export * from '../models/ExampleError';
-export * from '../models/ExampleErrorError';
+export * from '../models/ErrorDetail';
+export * from '../models/ErrorEnvelope';
+export * from '../models/ExtractRequest';
+export * from '../models/ExtractResponse';
 export * from '../models/FastGPT200Response';
 export * from '../models/FastGPT200ResponseData';
 export * from '../models/FastGPTRequest';
 export * from '../models/Meta';
+export * from '../models/PageInput';
+export * from '../models/PageOutput';
 export * from '../models/Search200Response';
 export * from '../models/Search200ResponseData';
 export * from '../models/SearchObject';
@@ -58,12 +62,16 @@ export * from '../models/TranslateWordInsights500Response';
 export * from '../models/UploadText';
 
 import { EnrichSearch200Response } from '../models/EnrichSearch200Response';
-import { ExampleError } from '../models/ExampleError';
-import { ExampleErrorError } from '../models/ExampleErrorError';
+import { ErrorDetail } from '../models/ErrorDetail';
+import { ErrorEnvelope } from '../models/ErrorEnvelope';
+import { ExtractRequest  , ExtractRequestFormatEnum   } from '../models/ExtractRequest';
+import { ExtractResponse } from '../models/ExtractResponse';
 import { FastGPT200Response } from '../models/FastGPT200Response';
 import { FastGPT200ResponseData } from '../models/FastGPT200ResponseData';
 import { FastGPTRequest } from '../models/FastGPTRequest';
 import { Meta } from '../models/Meta';
+import { PageInput } from '../models/PageInput';
+import { PageOutput } from '../models/PageOutput';
 import { Search200Response } from '../models/Search200Response';
 import { Search200ResponseData } from '../models/Search200ResponseData';
 import { SearchObject } from '../models/SearchObject';
@@ -129,6 +137,7 @@ let primitives = [
                  ];
 
 let enumsMap: Set<string> = new Set<string>([
+    "ExtractRequestFormatEnum",
     "SearchRequestWorkflowEnum",
     "SearchRequestLensTimeRelativeEnum",
     "TranslateDictionary200ResponseDefinitionTemporalTrendEnum",
@@ -141,12 +150,16 @@ let enumsMap: Set<string> = new Set<string>([
 
 let typeMap: {[index: string]: any} = {
     "EnrichSearch200Response": EnrichSearch200Response,
-    "ExampleError": ExampleError,
-    "ExampleErrorError": ExampleErrorError,
+    "ErrorDetail": ErrorDetail,
+    "ErrorEnvelope": ErrorEnvelope,
+    "ExtractRequest": ExtractRequest,
+    "ExtractResponse": ExtractResponse,
     "FastGPT200Response": FastGPT200Response,
     "FastGPT200ResponseData": FastGPT200ResponseData,
     "FastGPTRequest": FastGPTRequest,
     "Meta": Meta,
+    "PageInput": PageInput,
+    "PageOutput": PageOutput,
     "Search200Response": Search200Response,
     "Search200ResponseData": Search200ResponseData,
     "SearchObject": SearchObject,

@@ -11,7 +11,7 @@ import {SecurityAuthentication} from '../auth/auth';
 
 
 import { EnrichSearch200Response } from '../models/EnrichSearch200Response';
-import { ExampleError } from '../models/ExampleError';
+import { ErrorEnvelope } from '../models/ErrorEnvelope';
 
 /**
  * no description
@@ -88,11 +88,11 @@ export class EnrichmentApiResponseProcessor {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("401", response.httpStatusCode)) {
-            const body: ExampleError = ObjectSerializer.deserialize(
+            const body: ErrorEnvelope = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "ExampleError", ""
-            ) as ExampleError;
-            throw new ApiException<ExampleError>(response.httpStatusCode, "Access token is missing or invalid", body, response.headers);
+                "ErrorEnvelope", ""
+            ) as ErrorEnvelope;
+            throw new ApiException<ErrorEnvelope>(response.httpStatusCode, "Access token is missing or invalid", body, response.headers);
         }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml

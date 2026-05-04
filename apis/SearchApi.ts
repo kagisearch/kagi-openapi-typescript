@@ -10,7 +10,7 @@ import {canConsumeForm, isCodeInRange} from '../util';
 import {SecurityAuthentication} from '../auth/auth';
 
 
-import { ExampleError } from '../models/ExampleError';
+import { ErrorEnvelope } from '../models/ErrorEnvelope';
 import { Search200Response } from '../models/Search200Response';
 import { SearchRequest } from '../models/SearchRequest';
 
@@ -86,12 +86,40 @@ export class SearchApiResponseProcessor {
             ) as Search200Response;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
-        if (isCodeInRange("401", response.httpStatusCode)) {
-            const body: ExampleError = ObjectSerializer.deserialize(
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            const body: ErrorEnvelope = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "ExampleError", ""
-            ) as ExampleError;
-            throw new ApiException<ExampleError>(response.httpStatusCode, "Access token is missing or invalid", body, response.headers);
+                "ErrorEnvelope", ""
+            ) as ErrorEnvelope;
+            throw new ApiException<ErrorEnvelope>(response.httpStatusCode, "Invalid request parameters", body, response.headers);
+        }
+        if (isCodeInRange("401", response.httpStatusCode)) {
+            const body: ErrorEnvelope = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorEnvelope", ""
+            ) as ErrorEnvelope;
+            throw new ApiException<ErrorEnvelope>(response.httpStatusCode, "Access token is missing or invalid", body, response.headers);
+        }
+        if (isCodeInRange("403", response.httpStatusCode)) {
+            const body: ErrorEnvelope = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorEnvelope", ""
+            ) as ErrorEnvelope;
+            throw new ApiException<ErrorEnvelope>(response.httpStatusCode, "Forbidden - IP address not authorized", body, response.headers);
+        }
+        if (isCodeInRange("429", response.httpStatusCode)) {
+            const body: ErrorEnvelope = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorEnvelope", ""
+            ) as ErrorEnvelope;
+            throw new ApiException<ErrorEnvelope>(response.httpStatusCode, "Rate limited or usage limit exhausted", body, response.headers);
+        }
+        if (isCodeInRange("500", response.httpStatusCode)) {
+            const body: ErrorEnvelope = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorEnvelope", ""
+            ) as ErrorEnvelope;
+            throw new ApiException<ErrorEnvelope>(response.httpStatusCode, "Internal server error", body, response.headers);
         }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml

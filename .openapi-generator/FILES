@@ -1,8 +1,8 @@
 .gitattributes
 .gitignore
-.openapi-generator-ignore
 README.md
 apis/EnrichmentApi.ts
+apis/ExtractApi.ts
 apis/FastGPTApi.ts
 apis/SearchApi.ts
 apis/SummarizerApi.ts
@@ -12,6 +12,7 @@ apis/exception.ts
 auth/auth.ts
 configuration.ts
 docs/EnrichmentApi.md
+docs/ExtractApi.md
 docs/FastGPTApi.md
 docs/SearchApi.md
 docs/SummarizerApi.md
@@ -22,13 +23,17 @@ http/isomorphic-fetch.ts
 index.ts
 middleware.ts
 models/EnrichSearch200Response.ts
-models/ExampleError.ts
-models/ExampleErrorError.ts
+models/ErrorDetail.ts
+models/ErrorEnvelope.ts
+models/ExtractRequest.ts
+models/ExtractResponse.ts
 models/FastGPT200Response.ts
 models/FastGPT200ResponseData.ts
 models/FastGPTRequest.ts
 models/Meta.ts
 models/ObjectSerializer.ts
+models/PageInput.ts
+models/PageOutput.ts
 models/Search200Response.ts
 models/Search200ResponseData.ts
 models/SearchObject.ts

@@ -3,12 +3,16 @@ import { Configuration, PromiseConfigurationOptions, wrapOptions } from '../conf
 import { PromiseMiddleware, Middleware, PromiseMiddlewareWrapper } from '../middleware';
 
 import { EnrichSearch200Response } from '../models/EnrichSearch200Response';
-import { ExampleError } from '../models/ExampleError';
-import { ExampleErrorError } from '../models/ExampleErrorError';
+import { ErrorDetail } from '../models/ErrorDetail';
+import { ErrorEnvelope } from '../models/ErrorEnvelope';
+import { ExtractRequest } from '../models/ExtractRequest';
+import { ExtractResponse } from '../models/ExtractResponse';
 import { FastGPT200Response } from '../models/FastGPT200Response';
 import { FastGPT200ResponseData } from '../models/FastGPT200ResponseData';
 import { FastGPTRequest } from '../models/FastGPTRequest';
 import { Meta } from '../models/Meta';
+import { PageInput } from '../models/PageInput';
+import { PageOutput } from '../models/PageOutput';
 import { Search200Response } from '../models/Search200Response';
 import { Search200ResponseData } from '../models/Search200ResponseData';
 import { SearchObject } from '../models/SearchObject';
@@ -93,6 +97,47 @@ export class PromiseEnrichmentApi {
     public enrichSearch(q: string, type: 'news' | 'web', _options?: PromiseConfigurationOptions): Promise<EnrichSearch200Response> {
         const observableOptions = wrapOptions(_options);
         const result = this.api.enrichSearch(q, type, observableOptions);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
+import { ObservableExtractApi } from './ObservableAPI';
+
+import { ExtractApiRequestFactory, ExtractApiResponseProcessor} from "../apis/ExtractApi";
+export class PromiseExtractApi {
+    private api: ObservableExtractApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: ExtractApiRequestFactory,
+        responseProcessor?: ExtractApiResponseProcessor
+    ) {
+        this.api = new ObservableExtractApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * Extracts markdown content from up to 10 HTTP(s) URLs. Each URL is processed and the extracted content is returned in the response. 
+     * Extract page content as markdown from URLs
+     * @param extractRequest
+     */
+    public extractContentWithHttpInfo(extractRequest: ExtractRequest, _options?: PromiseConfigurationOptions): Promise<HttpInfo<ExtractResponse>> {
+        const observableOptions = wrapOptions(_options);
+        const result = this.api.extractContentWithHttpInfo(extractRequest, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * Extracts markdown content from up to 10 HTTP(s) URLs. Each URL is processed and the extracted content is returned in the response. 
+     * Extract page content as markdown from URLs
+     * @param extractRequest
+     */
+    public extractContent(extractRequest: ExtractRequest, _options?: PromiseConfigurationOptions): Promise<ExtractResponse> {
+        const observableOptions = wrapOptions(_options);
+        const result = this.api.extractContent(extractRequest, observableOptions);
         return result.toPromise();
     }
 
