@@ -1,4 +1,3 @@
-export * from '../models/EnrichSearch200Response';
 export * from '../models/ErrorDetail';
 export * from '../models/ErrorEnvelope';
 export * from '../models/ExtractRequest';
@@ -8,9 +7,6 @@ export * from '../models/PageInput';
 export * from '../models/PageOutput';
 export * from '../models/Search200Response';
 export * from '../models/Search200ResponseData';
-export * from '../models/SearchObject';
-export * from '../models/SearchObjectImage';
-export * from '../models/SearchObjectThumbnail';
 export * from '../models/SearchRequest';
 export * from '../models/SearchRequestExtract';
 export * from '../models/SearchRequestFilters';
@@ -20,42 +16,7 @@ export * from '../models/SearchRequestPersonalizationsDomainsInner';
 export * from '../models/SearchRequestPersonalizationsRegexesInner';
 export * from '../models/SearchResult';
 export * from '../models/SearchResultImage';
-export * from '../models/Translate200Response';
-export * from '../models/Translate200ResponseOneOf';
-export * from '../models/Translate200ResponseOneOf1';
-export * from '../models/Translate200ResponseOneOfDefinition';
-export * from '../models/Translate200ResponseOneOfDefinitionDefinitionsInner';
-export * from '../models/Translate200ResponseOneOfDefinitionDefinitionsInnerMeaningsInner';
-export * from '../models/Translate200ResponseOneOfDetectedLanguage';
-export * from '../models/Translate400Response';
-export * from '../models/Translate500Response';
-export * from '../models/TranslateAlternatives200Response';
-export * from '../models/TranslateAlternatives200ResponseElementsInner';
-export * from '../models/TranslateAlternatives401Response';
-export * from '../models/TranslateAlternatives402Response';
-export * from '../models/TranslateAlternatives500Response';
-export * from '../models/TranslateDetect200Response';
-export * from '../models/TranslateDetect400Response';
-export * from '../models/TranslateDetectRequest';
-export * from '../models/TranslateDictionary200Response';
-export * from '../models/TranslateDictionary200ResponseDefinition';
-export * from '../models/TranslateDictionary200ResponseDefinitionPrimaryMeaning';
-export * from '../models/TranslateDictionary200ResponseDefinitionSecondaryMeaningsInner';
-export * from '../models/TranslateDictionary200ResponseLanguage';
-export * from '../models/TranslateDictionary400Response';
-export * from '../models/TranslateDictionary500Response';
-export * from '../models/TranslateDictionaryRequest';
-export * from '../models/TranslateListLanguages200ResponseInner';
-export * from '../models/TranslateRequest';
-export * from '../models/TranslateRequestText';
-export * from '../models/TranslateRomanize200Response';
-export * from '../models/TranslateWordInsights200Response';
-export * from '../models/TranslateWordInsights200ResponseInsightsInner';
-export * from '../models/TranslateWordInsights200ResponseInsightsInnerVariationsInner';
-export * from '../models/TranslateWordInsights400Response';
-export * from '../models/TranslateWordInsights500Response';
 
-import { EnrichSearch200Response } from '../models/EnrichSearch200Response';
 import { ErrorDetail } from '../models/ErrorDetail';
 import { ErrorEnvelope } from '../models/ErrorEnvelope';
 import { ExtractRequest  , ExtractRequestFormatEnum   } from '../models/ExtractRequest';
@@ -65,9 +26,6 @@ import { PageInput } from '../models/PageInput';
 import { PageOutput } from '../models/PageOutput';
 import { Search200Response } from '../models/Search200Response';
 import { Search200ResponseData } from '../models/Search200ResponseData';
-import { SearchObject } from '../models/SearchObject';
-import { SearchObjectImage } from '../models/SearchObjectImage';
-import { SearchObjectThumbnail } from '../models/SearchObjectThumbnail';
 import { SearchRequest , SearchRequestWorkflowEnum  , SearchRequestFormatEnum           } from '../models/SearchRequest';
 import { SearchRequestExtract } from '../models/SearchRequestExtract';
 import { SearchRequestFilters } from '../models/SearchRequestFilters';
@@ -77,40 +35,6 @@ import { SearchRequestPersonalizationsDomainsInner } from '../models/SearchReque
 import { SearchRequestPersonalizationsRegexesInner } from '../models/SearchRequestPersonalizationsRegexesInner';
 import { SearchResult } from '../models/SearchResult';
 import { SearchResultImage } from '../models/SearchResultImage';
-import { Translate200ResponseClass } from '../models/Translate200Response';
-import { Translate200ResponseOneOf } from '../models/Translate200ResponseOneOf';
-import { Translate200ResponseOneOf1 } from '../models/Translate200ResponseOneOf1';
-import { Translate200ResponseOneOfDefinition } from '../models/Translate200ResponseOneOfDefinition';
-import { Translate200ResponseOneOfDefinitionDefinitionsInner } from '../models/Translate200ResponseOneOfDefinitionDefinitionsInner';
-import { Translate200ResponseOneOfDefinitionDefinitionsInnerMeaningsInner } from '../models/Translate200ResponseOneOfDefinitionDefinitionsInnerMeaningsInner';
-import { Translate200ResponseOneOfDetectedLanguage } from '../models/Translate200ResponseOneOfDetectedLanguage';
-import { Translate400Response } from '../models/Translate400Response';
-import { Translate500Response } from '../models/Translate500Response';
-import { TranslateAlternatives200Response } from '../models/TranslateAlternatives200Response';
-import { TranslateAlternatives200ResponseElementsInner } from '../models/TranslateAlternatives200ResponseElementsInner';
-import { TranslateAlternatives401Response } from '../models/TranslateAlternatives401Response';
-import { TranslateAlternatives402Response } from '../models/TranslateAlternatives402Response';
-import { TranslateAlternatives500Response } from '../models/TranslateAlternatives500Response';
-import { TranslateDetect200Response } from '../models/TranslateDetect200Response';
-import { TranslateDetect400Response } from '../models/TranslateDetect400Response';
-import { TranslateDetectRequest } from '../models/TranslateDetectRequest';
-import { TranslateDictionary200Response } from '../models/TranslateDictionary200Response';
-import { TranslateDictionary200ResponseDefinition       , TranslateDictionary200ResponseDefinitionTemporalTrendEnum  , TranslateDictionary200ResponseDefinitionGenderEnum      } from '../models/TranslateDictionary200ResponseDefinition';
-import { TranslateDictionary200ResponseDefinitionPrimaryMeaning } from '../models/TranslateDictionary200ResponseDefinitionPrimaryMeaning';
-import { TranslateDictionary200ResponseDefinitionSecondaryMeaningsInner } from '../models/TranslateDictionary200ResponseDefinitionSecondaryMeaningsInner';
-import { TranslateDictionary200ResponseLanguage } from '../models/TranslateDictionary200ResponseLanguage';
-import { TranslateDictionary400Response } from '../models/TranslateDictionary400Response';
-import { TranslateDictionary500Response } from '../models/TranslateDictionary500Response';
-import { TranslateDictionaryRequest } from '../models/TranslateDictionaryRequest';
-import { TranslateListLanguages200ResponseInner } from '../models/TranslateListLanguages200ResponseInner';
-import { TranslateRequest       , TranslateRequestFormalityEnum  , TranslateRequestSpeakerGenderEnum  , TranslateRequestAddresseeGenderEnum  , TranslateRequestTranslationStyleEnum       } from '../models/TranslateRequest';
-import { TranslateRequestTextClass } from '../models/TranslateRequestText';
-import { TranslateRomanize200Response } from '../models/TranslateRomanize200Response';
-import { TranslateWordInsights200Response } from '../models/TranslateWordInsights200Response';
-import { TranslateWordInsights200ResponseInsightsInner } from '../models/TranslateWordInsights200ResponseInsightsInner';
-import { TranslateWordInsights200ResponseInsightsInnerVariationsInner } from '../models/TranslateWordInsights200ResponseInsightsInnerVariationsInner';
-import { TranslateWordInsights400Response } from '../models/TranslateWordInsights400Response';
-import { TranslateWordInsights500Response } from '../models/TranslateWordInsights500Response';
 
 /* tslint:disable:no-unused-variable */
 let primitives = [
@@ -129,16 +53,9 @@ let enumsMap: Set<string> = new Set<string>([
     "SearchRequestWorkflowEnum",
     "SearchRequestFormatEnum",
     "SearchRequestLensTimeRelativeEnum",
-    "TranslateDictionary200ResponseDefinitionTemporalTrendEnum",
-    "TranslateDictionary200ResponseDefinitionGenderEnum",
-    "TranslateRequestFormalityEnum",
-    "TranslateRequestSpeakerGenderEnum",
-    "TranslateRequestAddresseeGenderEnum",
-    "TranslateRequestTranslationStyleEnum",
 ]);
 
 let typeMap: {[index: string]: any} = {
-    "EnrichSearch200Response": EnrichSearch200Response,
     "ErrorDetail": ErrorDetail,
     "ErrorEnvelope": ErrorEnvelope,
     "ExtractRequest": ExtractRequest,
@@ -148,9 +65,6 @@ let typeMap: {[index: string]: any} = {
     "PageOutput": PageOutput,
     "Search200Response": Search200Response,
     "Search200ResponseData": Search200ResponseData,
-    "SearchObject": SearchObject,
-    "SearchObjectImage": SearchObjectImage,
-    "SearchObjectThumbnail": SearchObjectThumbnail,
     "SearchRequest": SearchRequest,
     "SearchRequestExtract": SearchRequestExtract,
     "SearchRequestFilters": SearchRequestFilters,
@@ -160,40 +74,6 @@ let typeMap: {[index: string]: any} = {
     "SearchRequestPersonalizationsRegexesInner": SearchRequestPersonalizationsRegexesInner,
     "SearchResult": SearchResult,
     "SearchResultImage": SearchResultImage,
-    "Translate200Response": Translate200ResponseClass,
-    "Translate200ResponseOneOf": Translate200ResponseOneOf,
-    "Translate200ResponseOneOf1": Translate200ResponseOneOf1,
-    "Translate200ResponseOneOfDefinition": Translate200ResponseOneOfDefinition,
-    "Translate200ResponseOneOfDefinitionDefinitionsInner": Translate200ResponseOneOfDefinitionDefinitionsInner,
-    "Translate200ResponseOneOfDefinitionDefinitionsInnerMeaningsInner": Translate200ResponseOneOfDefinitionDefinitionsInnerMeaningsInner,
-    "Translate200ResponseOneOfDetectedLanguage": Translate200ResponseOneOfDetectedLanguage,
-    "Translate400Response": Translate400Response,
-    "Translate500Response": Translate500Response,
-    "TranslateAlternatives200Response": TranslateAlternatives200Response,
-    "TranslateAlternatives200ResponseElementsInner": TranslateAlternatives200ResponseElementsInner,
-    "TranslateAlternatives401Response": TranslateAlternatives401Response,
-    "TranslateAlternatives402Response": TranslateAlternatives402Response,
-    "TranslateAlternatives500Response": TranslateAlternatives500Response,
-    "TranslateDetect200Response": TranslateDetect200Response,
-    "TranslateDetect400Response": TranslateDetect400Response,
-    "TranslateDetectRequest": TranslateDetectRequest,
-    "TranslateDictionary200Response": TranslateDictionary200Response,
-    "TranslateDictionary200ResponseDefinition": TranslateDictionary200ResponseDefinition,
-    "TranslateDictionary200ResponseDefinitionPrimaryMeaning": TranslateDictionary200ResponseDefinitionPrimaryMeaning,
-    "TranslateDictionary200ResponseDefinitionSecondaryMeaningsInner": TranslateDictionary200ResponseDefinitionSecondaryMeaningsInner,
-    "TranslateDictionary200ResponseLanguage": TranslateDictionary200ResponseLanguage,
-    "TranslateDictionary400Response": TranslateDictionary400Response,
-    "TranslateDictionary500Response": TranslateDictionary500Response,
-    "TranslateDictionaryRequest": TranslateDictionaryRequest,
-    "TranslateListLanguages200ResponseInner": TranslateListLanguages200ResponseInner,
-    "TranslateRequest": TranslateRequest,
-    "TranslateRequestText": TranslateRequestTextClass,
-    "TranslateRomanize200Response": TranslateRomanize200Response,
-    "TranslateWordInsights200Response": TranslateWordInsights200Response,
-    "TranslateWordInsights200ResponseInsightsInner": TranslateWordInsights200ResponseInsightsInner,
-    "TranslateWordInsights200ResponseInsightsInnerVariationsInner": TranslateWordInsights200ResponseInsightsInnerVariationsInner,
-    "TranslateWordInsights400Response": TranslateWordInsights400Response,
-    "TranslateWordInsights500Response": TranslateWordInsights500Response,
 }
 
 type MimeTypeDescriptor = {
