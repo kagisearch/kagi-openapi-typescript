@@ -8,9 +8,6 @@ import { ErrorDetail } from '../models/ErrorDetail';
 import { ErrorEnvelope } from '../models/ErrorEnvelope';
 import { ExtractRequest } from '../models/ExtractRequest';
 import { ExtractResponse } from '../models/ExtractResponse';
-import { FastGPT200Response } from '../models/FastGPT200Response';
-import { FastGPT200ResponseData } from '../models/FastGPT200ResponseData';
-import { FastGPTRequest } from '../models/FastGPTRequest';
 import { Meta } from '../models/Meta';
 import { PageInput } from '../models/PageInput';
 import { PageOutput } from '../models/PageOutput';
@@ -28,8 +25,6 @@ import { SearchRequestPersonalizationsDomainsInner } from '../models/SearchReque
 import { SearchRequestPersonalizationsRegexesInner } from '../models/SearchRequestPersonalizationsRegexesInner';
 import { SearchResult } from '../models/SearchResult';
 import { SearchResultImage } from '../models/SearchResultImage';
-import { Summary } from '../models/Summary';
-import { SummaryData } from '../models/SummaryData';
 import { Translate200Response } from '../models/Translate200Response';
 import { Translate200ResponseOneOf } from '../models/Translate200ResponseOneOf';
 import { Translate200ResponseOneOf1 } from '../models/Translate200ResponseOneOf1';
@@ -64,7 +59,6 @@ import { TranslateWordInsights200ResponseInsightsInner } from '../models/Transla
 import { TranslateWordInsights200ResponseInsightsInnerVariationsInner } from '../models/TranslateWordInsights200ResponseInsightsInnerVariationsInner';
 import { TranslateWordInsights400Response } from '../models/TranslateWordInsights400Response';
 import { TranslateWordInsights500Response } from '../models/TranslateWordInsights500Response';
-import { UploadText } from '../models/UploadText';
 
 import { EnrichmentApiRequestFactory, EnrichmentApiResponseProcessor} from "../apis/EnrichmentApi";
 export class ObservableEnrichmentApi {
@@ -170,58 +164,6 @@ export class ObservableExtractApi {
 
 }
 
-import { FastGPTApiRequestFactory, FastGPTApiResponseProcessor} from "../apis/FastGPTApi";
-export class ObservableFastGPTApi {
-    private requestFactory: FastGPTApiRequestFactory;
-    private responseProcessor: FastGPTApiResponseProcessor;
-    private configuration: Configuration;
-
-    public constructor(
-        configuration: Configuration,
-        requestFactory?: FastGPTApiRequestFactory,
-        responseProcessor?: FastGPTApiResponseProcessor
-    ) {
-        this.configuration = configuration;
-        this.requestFactory = requestFactory || new FastGPTApiRequestFactory(configuration);
-        this.responseProcessor = responseProcessor || new FastGPTApiResponseProcessor();
-    }
-
-    /**
-     * FastGPT is a Kagi service using powerful LLMs to answer user queries running a full search engine underneath. Think ChatGPT, but on steroids and faster! You can try the web app here.
-     * Answer a query.
-     * @param fastGPTRequest Contains the query to process.
-     */
-    public fastGPTWithHttpInfo(fastGPTRequest: FastGPTRequest, _options?: ConfigurationOptions): Observable<HttpInfo<FastGPT200Response>> {
-        const _config = mergeConfiguration(this.configuration, _options);
-
-        const requestContextPromise = this.requestFactory.fastGPT(fastGPTRequest, _config);
-        // build promise chain
-        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
-        for (const middleware of _config.middleware) {
-            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
-        }
-
-        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => _config.httpApi.send(ctx))).
-            pipe(mergeMap((response: ResponseContext) => {
-                let middlewarePostObservable = of(response);
-                for (const middleware of _config.middleware.reverse()) {
-                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
-                }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.fastGPTWithHttpInfo(rsp)));
-            }));
-    }
-
-    /**
-     * FastGPT is a Kagi service using powerful LLMs to answer user queries running a full search engine underneath. Think ChatGPT, but on steroids and faster! You can try the web app here.
-     * Answer a query.
-     * @param fastGPTRequest Contains the query to process.
-     */
-    public fastGPT(fastGPTRequest: FastGPTRequest, _options?: ConfigurationOptions): Observable<FastGPT200Response> {
-        return this.fastGPTWithHttpInfo(fastGPTRequest, _options).pipe(map((apiResponse: HttpInfo<FastGPT200Response>) => apiResponse.data));
-    }
-
-}
-
 import { SearchApiRequestFactory, SearchApiResponseProcessor} from "../apis/SearchApi";
 export class ObservableSearchApi {
     private requestFactory: SearchApiRequestFactory;
@@ -268,104 +210,6 @@ export class ObservableSearchApi {
      */
     public search(searchRequest: SearchRequest, _options?: ConfigurationOptions): Observable<Search200Response> {
         return this.searchWithHttpInfo(searchRequest, _options).pipe(map((apiResponse: HttpInfo<Search200Response>) => apiResponse.data));
-    }
-
-}
-
-import { SummarizerApiRequestFactory, SummarizerApiResponseProcessor} from "../apis/SummarizerApi";
-export class ObservableSummarizerApi {
-    private requestFactory: SummarizerApiRequestFactory;
-    private responseProcessor: SummarizerApiResponseProcessor;
-    private configuration: Configuration;
-
-    public constructor(
-        configuration: Configuration,
-        requestFactory?: SummarizerApiRequestFactory,
-        responseProcessor?: SummarizerApiResponseProcessor
-    ) {
-        this.configuration = configuration;
-        this.requestFactory = requestFactory || new SummarizerApiRequestFactory(configuration);
-        this.responseProcessor = responseProcessor || new SummarizerApiResponseProcessor();
-    }
-
-    /**
-     * Upload text to summarize.
-     * @param uploadText Text to summarize
-     * @param [engine] Different summarization engines are provided that will give you choices over the \&quot;flavor\&quot; of the summarization text.
-     * @param [summaryType] Different summary types are provided that control the structure of the summary output.
-     * @param [targetLanguage] The summarizer can translate the output into a desired language, using the table of supported language codes below.  If no language is specified, the document\&#39;s original language is allowed to influence the summarizer\&#39;s output. Specifying a language will add an explicit translation step, to translate the summary to the desired language.  For example, if a document is mostly written in Spanish, the summary output may itself be in Spanish or contain Spanish passages. Specifying \&quot;EN\&quot; will ensure all passages are translated as English. 
-     * @param [cache] Whether to allow cached requests &amp; responses.
-     */
-    public summarizeTextWithHttpInfo(uploadText: UploadText, engine?: 'cecil' | 'agnes' | 'daphne' | 'muriel', summaryType?: 'summary' | 'takeaway', targetLanguage?: 'BG' | 'CS' | 'DA' | 'DE' | 'EL' | 'EN' | 'ES' | 'ET' | 'FI' | 'FR' | 'HU' | 'ID' | 'IT' | 'JA' | 'KO' | 'LT' | 'LV' | 'NB' | 'NL' | 'PL' | 'PT' | 'RO' | 'RU' | 'SK' | 'SL' | 'SV' | 'TR' | 'UK' | 'ZH' | 'ZH-HANT', cache?: boolean, _options?: ConfigurationOptions): Observable<HttpInfo<Summary>> {
-        const _config = mergeConfiguration(this.configuration, _options);
-
-        const requestContextPromise = this.requestFactory.summarizeText(uploadText, engine, summaryType, targetLanguage, cache, _config);
-        // build promise chain
-        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
-        for (const middleware of _config.middleware) {
-            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
-        }
-
-        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => _config.httpApi.send(ctx))).
-            pipe(mergeMap((response: ResponseContext) => {
-                let middlewarePostObservable = of(response);
-                for (const middleware of _config.middleware.reverse()) {
-                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
-                }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.summarizeTextWithHttpInfo(rsp)));
-            }));
-    }
-
-    /**
-     * Upload text to summarize.
-     * @param uploadText Text to summarize
-     * @param [engine] Different summarization engines are provided that will give you choices over the \&quot;flavor\&quot; of the summarization text.
-     * @param [summaryType] Different summary types are provided that control the structure of the summary output.
-     * @param [targetLanguage] The summarizer can translate the output into a desired language, using the table of supported language codes below.  If no language is specified, the document\&#39;s original language is allowed to influence the summarizer\&#39;s output. Specifying a language will add an explicit translation step, to translate the summary to the desired language.  For example, if a document is mostly written in Spanish, the summary output may itself be in Spanish or contain Spanish passages. Specifying \&quot;EN\&quot; will ensure all passages are translated as English. 
-     * @param [cache] Whether to allow cached requests &amp; responses.
-     */
-    public summarizeText(uploadText: UploadText, engine?: 'cecil' | 'agnes' | 'daphne' | 'muriel', summaryType?: 'summary' | 'takeaway', targetLanguage?: 'BG' | 'CS' | 'DA' | 'DE' | 'EL' | 'EN' | 'ES' | 'ET' | 'FI' | 'FR' | 'HU' | 'ID' | 'IT' | 'JA' | 'KO' | 'LT' | 'LV' | 'NB' | 'NL' | 'PL' | 'PT' | 'RO' | 'RU' | 'SK' | 'SL' | 'SV' | 'TR' | 'UK' | 'ZH' | 'ZH-HANT', cache?: boolean, _options?: ConfigurationOptions): Observable<Summary> {
-        return this.summarizeTextWithHttpInfo(uploadText, engine, summaryType, targetLanguage, cache, _options).pipe(map((apiResponse: HttpInfo<Summary>) => apiResponse.data));
-    }
-
-    /**
-     * Get a summary for a URL
-     * @param url A URL to a document to summarize.
-     * @param [engine] Different summarization engines are provided that will give you choices over the \&quot;flavor\&quot; of the summarization text.
-     * @param [summaryType] Different summary types are provided that control the structure of the summary output.
-     * @param [targetLanguage] The summarizer can translate the output into a desired language, using the table of supported language codes below.  If no language is specified, the document\&#39;s original language is allowed to influence the summarizer\&#39;s output. Specifying a language will add an explicit translation step, to translate the summary to the desired language.  For example, if a document is mostly written in Spanish, the summary output may itself be in Spanish or contain Spanish passages. Specifying \&quot;EN\&quot; will ensure all passages are translated as English. 
-     * @param [cache] Whether to allow cached requests &amp; responses.
-     */
-    public summarizeURLWithHttpInfo(url: string, engine?: 'cecil' | 'agnes' | 'daphne' | 'muriel', summaryType?: 'summary' | 'takeaway', targetLanguage?: 'BG' | 'CS' | 'DA' | 'DE' | 'EL' | 'EN' | 'ES' | 'ET' | 'FI' | 'FR' | 'HU' | 'ID' | 'IT' | 'JA' | 'KO' | 'LT' | 'LV' | 'NB' | 'NL' | 'PL' | 'PT' | 'RO' | 'RU' | 'SK' | 'SL' | 'SV' | 'TR' | 'UK' | 'ZH' | 'ZH-HANT', cache?: boolean, _options?: ConfigurationOptions): Observable<HttpInfo<Summary>> {
-        const _config = mergeConfiguration(this.configuration, _options);
-
-        const requestContextPromise = this.requestFactory.summarizeURL(url, engine, summaryType, targetLanguage, cache, _config);
-        // build promise chain
-        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
-        for (const middleware of _config.middleware) {
-            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
-        }
-
-        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => _config.httpApi.send(ctx))).
-            pipe(mergeMap((response: ResponseContext) => {
-                let middlewarePostObservable = of(response);
-                for (const middleware of _config.middleware.reverse()) {
-                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
-                }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.summarizeURLWithHttpInfo(rsp)));
-            }));
-    }
-
-    /**
-     * Get a summary for a URL
-     * @param url A URL to a document to summarize.
-     * @param [engine] Different summarization engines are provided that will give you choices over the \&quot;flavor\&quot; of the summarization text.
-     * @param [summaryType] Different summary types are provided that control the structure of the summary output.
-     * @param [targetLanguage] The summarizer can translate the output into a desired language, using the table of supported language codes below.  If no language is specified, the document\&#39;s original language is allowed to influence the summarizer\&#39;s output. Specifying a language will add an explicit translation step, to translate the summary to the desired language.  For example, if a document is mostly written in Spanish, the summary output may itself be in Spanish or contain Spanish passages. Specifying \&quot;EN\&quot; will ensure all passages are translated as English. 
-     * @param [cache] Whether to allow cached requests &amp; responses.
-     */
-    public summarizeURL(url: string, engine?: 'cecil' | 'agnes' | 'daphne' | 'muriel', summaryType?: 'summary' | 'takeaway', targetLanguage?: 'BG' | 'CS' | 'DA' | 'DE' | 'EL' | 'EN' | 'ES' | 'ET' | 'FI' | 'FR' | 'HU' | 'ID' | 'IT' | 'JA' | 'KO' | 'LT' | 'LV' | 'NB' | 'NL' | 'PL' | 'PT' | 'RO' | 'RU' | 'SK' | 'SL' | 'SV' | 'TR' | 'UK' | 'ZH' | 'ZH-HANT', cache?: boolean, _options?: ConfigurationOptions): Observable<Summary> {
-        return this.summarizeURLWithHttpInfo(url, engine, summaryType, targetLanguage, cache, _options).pipe(map((apiResponse: HttpInfo<Summary>) => apiResponse.data));
     }
 
 }

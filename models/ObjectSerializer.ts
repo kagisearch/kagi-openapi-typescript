@@ -3,9 +3,6 @@ export * from '../models/ErrorDetail';
 export * from '../models/ErrorEnvelope';
 export * from '../models/ExtractRequest';
 export * from '../models/ExtractResponse';
-export * from '../models/FastGPT200Response';
-export * from '../models/FastGPT200ResponseData';
-export * from '../models/FastGPTRequest';
 export * from '../models/Meta';
 export * from '../models/PageInput';
 export * from '../models/PageOutput';
@@ -23,8 +20,6 @@ export * from '../models/SearchRequestPersonalizationsDomainsInner';
 export * from '../models/SearchRequestPersonalizationsRegexesInner';
 export * from '../models/SearchResult';
 export * from '../models/SearchResultImage';
-export * from '../models/Summary';
-export * from '../models/SummaryData';
 export * from '../models/Translate200Response';
 export * from '../models/Translate200ResponseOneOf';
 export * from '../models/Translate200ResponseOneOf1';
@@ -59,16 +54,12 @@ export * from '../models/TranslateWordInsights200ResponseInsightsInner';
 export * from '../models/TranslateWordInsights200ResponseInsightsInnerVariationsInner';
 export * from '../models/TranslateWordInsights400Response';
 export * from '../models/TranslateWordInsights500Response';
-export * from '../models/UploadText';
 
 import { EnrichSearch200Response } from '../models/EnrichSearch200Response';
 import { ErrorDetail } from '../models/ErrorDetail';
 import { ErrorEnvelope } from '../models/ErrorEnvelope';
 import { ExtractRequest  , ExtractRequestFormatEnum   } from '../models/ExtractRequest';
 import { ExtractResponse } from '../models/ExtractResponse';
-import { FastGPT200Response } from '../models/FastGPT200Response';
-import { FastGPT200ResponseData } from '../models/FastGPT200ResponseData';
-import { FastGPTRequest } from '../models/FastGPTRequest';
 import { Meta } from '../models/Meta';
 import { PageInput } from '../models/PageInput';
 import { PageOutput } from '../models/PageOutput';
@@ -86,8 +77,6 @@ import { SearchRequestPersonalizationsDomainsInner } from '../models/SearchReque
 import { SearchRequestPersonalizationsRegexesInner } from '../models/SearchRequestPersonalizationsRegexesInner';
 import { SearchResult } from '../models/SearchResult';
 import { SearchResultImage } from '../models/SearchResultImage';
-import { Summary } from '../models/Summary';
-import { SummaryData } from '../models/SummaryData';
 import { Translate200ResponseClass } from '../models/Translate200Response';
 import { Translate200ResponseOneOf } from '../models/Translate200ResponseOneOf';
 import { Translate200ResponseOneOf1 } from '../models/Translate200ResponseOneOf1';
@@ -122,7 +111,6 @@ import { TranslateWordInsights200ResponseInsightsInner } from '../models/Transla
 import { TranslateWordInsights200ResponseInsightsInnerVariationsInner } from '../models/TranslateWordInsights200ResponseInsightsInnerVariationsInner';
 import { TranslateWordInsights400Response } from '../models/TranslateWordInsights400Response';
 import { TranslateWordInsights500Response } from '../models/TranslateWordInsights500Response';
-import { UploadText } from '../models/UploadText';
 
 /* tslint:disable:no-unused-variable */
 let primitives = [
@@ -155,9 +143,6 @@ let typeMap: {[index: string]: any} = {
     "ErrorEnvelope": ErrorEnvelope,
     "ExtractRequest": ExtractRequest,
     "ExtractResponse": ExtractResponse,
-    "FastGPT200Response": FastGPT200Response,
-    "FastGPT200ResponseData": FastGPT200ResponseData,
-    "FastGPTRequest": FastGPTRequest,
     "Meta": Meta,
     "PageInput": PageInput,
     "PageOutput": PageOutput,
@@ -175,8 +160,6 @@ let typeMap: {[index: string]: any} = {
     "SearchRequestPersonalizationsRegexesInner": SearchRequestPersonalizationsRegexesInner,
     "SearchResult": SearchResult,
     "SearchResultImage": SearchResultImage,
-    "Summary": Summary,
-    "SummaryData": SummaryData,
     "Translate200Response": Translate200ResponseClass,
     "Translate200ResponseOneOf": Translate200ResponseOneOf,
     "Translate200ResponseOneOf1": Translate200ResponseOneOf1,
@@ -211,7 +194,6 @@ let typeMap: {[index: string]: any} = {
     "TranslateWordInsights200ResponseInsightsInnerVariationsInner": TranslateWordInsights200ResponseInsightsInnerVariationsInner,
     "TranslateWordInsights400Response": TranslateWordInsights400Response,
     "TranslateWordInsights500Response": TranslateWordInsights500Response,
-    "UploadText": UploadText,
 }
 
 type MimeTypeDescriptor = {

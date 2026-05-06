@@ -3,9 +3,7 @@
 README.md
 apis/EnrichmentApi.ts
 apis/ExtractApi.ts
-apis/FastGPTApi.ts
 apis/SearchApi.ts
-apis/SummarizerApi.ts
 apis/TranslateApi.ts
 apis/baseapi.ts
 apis/exception.ts
@@ -13,9 +11,7 @@ auth/auth.ts
 configuration.ts
 docs/EnrichmentApi.md
 docs/ExtractApi.md
-docs/FastGPTApi.md
 docs/SearchApi.md
-docs/SummarizerApi.md
 docs/TranslateApi.md
 git_push.sh
 http/http.ts
@@ -27,9 +23,6 @@ models/ErrorDetail.ts
 models/ErrorEnvelope.ts
 models/ExtractRequest.ts
 models/ExtractResponse.ts
-models/FastGPT200Response.ts
-models/FastGPT200ResponseData.ts
-models/FastGPTRequest.ts
 models/Meta.ts
 models/ObjectSerializer.ts
 models/PageInput.ts
@@ -48,8 +41,6 @@ models/SearchRequestPersonalizationsDomainsInner.ts
 models/SearchRequestPersonalizationsRegexesInner.ts
 models/SearchResult.ts
 models/SearchResultImage.ts
-models/Summary.ts
-models/SummaryData.ts
 models/Translate200Response.ts
 models/Translate200ResponseOneOf.ts
 models/Translate200ResponseOneOf1.ts
@@ -84,7 +75,6 @@ models/TranslateWordInsights200ResponseInsightsInner.ts
 models/TranslateWordInsights200ResponseInsightsInnerVariationsInner.ts
 models/TranslateWordInsights400Response.ts
 models/TranslateWordInsights500Response.ts
-models/UploadText.ts
 models/all.ts
 package.json
 rxjsStub.ts

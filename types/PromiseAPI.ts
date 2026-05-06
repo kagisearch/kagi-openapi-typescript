@@ -7,9 +7,6 @@ import { ErrorDetail } from '../models/ErrorDetail';
 import { ErrorEnvelope } from '../models/ErrorEnvelope';
 import { ExtractRequest } from '../models/ExtractRequest';
 import { ExtractResponse } from '../models/ExtractResponse';
-import { FastGPT200Response } from '../models/FastGPT200Response';
-import { FastGPT200ResponseData } from '../models/FastGPT200ResponseData';
-import { FastGPTRequest } from '../models/FastGPTRequest';
 import { Meta } from '../models/Meta';
 import { PageInput } from '../models/PageInput';
 import { PageOutput } from '../models/PageOutput';
@@ -27,8 +24,6 @@ import { SearchRequestPersonalizationsDomainsInner } from '../models/SearchReque
 import { SearchRequestPersonalizationsRegexesInner } from '../models/SearchRequestPersonalizationsRegexesInner';
 import { SearchResult } from '../models/SearchResult';
 import { SearchResultImage } from '../models/SearchResultImage';
-import { Summary } from '../models/Summary';
-import { SummaryData } from '../models/SummaryData';
 import { Translate200Response } from '../models/Translate200Response';
 import { Translate200ResponseOneOf } from '../models/Translate200ResponseOneOf';
 import { Translate200ResponseOneOf1 } from '../models/Translate200ResponseOneOf1';
@@ -63,7 +58,6 @@ import { TranslateWordInsights200ResponseInsightsInner } from '../models/Transla
 import { TranslateWordInsights200ResponseInsightsInnerVariationsInner } from '../models/TranslateWordInsights200ResponseInsightsInnerVariationsInner';
 import { TranslateWordInsights400Response } from '../models/TranslateWordInsights400Response';
 import { TranslateWordInsights500Response } from '../models/TranslateWordInsights500Response';
-import { UploadText } from '../models/UploadText';
 import { ObservableEnrichmentApi } from './ObservableAPI';
 
 import { EnrichmentApiRequestFactory, EnrichmentApiResponseProcessor} from "../apis/EnrichmentApi";
@@ -146,47 +140,6 @@ export class PromiseExtractApi {
 
 
 
-import { ObservableFastGPTApi } from './ObservableAPI';
-
-import { FastGPTApiRequestFactory, FastGPTApiResponseProcessor} from "../apis/FastGPTApi";
-export class PromiseFastGPTApi {
-    private api: ObservableFastGPTApi
-
-    public constructor(
-        configuration: Configuration,
-        requestFactory?: FastGPTApiRequestFactory,
-        responseProcessor?: FastGPTApiResponseProcessor
-    ) {
-        this.api = new ObservableFastGPTApi(configuration, requestFactory, responseProcessor);
-    }
-
-    /**
-     * FastGPT is a Kagi service using powerful LLMs to answer user queries running a full search engine underneath. Think ChatGPT, but on steroids and faster! You can try the web app here.
-     * Answer a query.
-     * @param fastGPTRequest Contains the query to process.
-     */
-    public fastGPTWithHttpInfo(fastGPTRequest: FastGPTRequest, _options?: PromiseConfigurationOptions): Promise<HttpInfo<FastGPT200Response>> {
-        const observableOptions = wrapOptions(_options);
-        const result = this.api.fastGPTWithHttpInfo(fastGPTRequest, observableOptions);
-        return result.toPromise();
-    }
-
-    /**
-     * FastGPT is a Kagi service using powerful LLMs to answer user queries running a full search engine underneath. Think ChatGPT, but on steroids and faster! You can try the web app here.
-     * Answer a query.
-     * @param fastGPTRequest Contains the query to process.
-     */
-    public fastGPT(fastGPTRequest: FastGPTRequest, _options?: PromiseConfigurationOptions): Promise<FastGPT200Response> {
-        const observableOptions = wrapOptions(_options);
-        const result = this.api.fastGPT(fastGPTRequest, observableOptions);
-        return result.toPromise();
-    }
-
-
-}
-
-
-
 import { ObservableSearchApi } from './ObservableAPI';
 
 import { SearchApiRequestFactory, SearchApiResponseProcessor} from "../apis/SearchApi";
@@ -218,81 +171,6 @@ export class PromiseSearchApi {
     public search(searchRequest: SearchRequest, _options?: PromiseConfigurationOptions): Promise<Search200Response> {
         const observableOptions = wrapOptions(_options);
         const result = this.api.search(searchRequest, observableOptions);
-        return result.toPromise();
-    }
-
-
-}
-
-
-
-import { ObservableSummarizerApi } from './ObservableAPI';
-
-import { SummarizerApiRequestFactory, SummarizerApiResponseProcessor} from "../apis/SummarizerApi";
-export class PromiseSummarizerApi {
-    private api: ObservableSummarizerApi
-
-    public constructor(
-        configuration: Configuration,
-        requestFactory?: SummarizerApiRequestFactory,
-        responseProcessor?: SummarizerApiResponseProcessor
-    ) {
-        this.api = new ObservableSummarizerApi(configuration, requestFactory, responseProcessor);
-    }
-
-    /**
-     * Upload text to summarize.
-     * @param uploadText Text to summarize
-     * @param [engine] Different summarization engines are provided that will give you choices over the \&quot;flavor\&quot; of the summarization text.
-     * @param [summaryType] Different summary types are provided that control the structure of the summary output.
-     * @param [targetLanguage] The summarizer can translate the output into a desired language, using the table of supported language codes below.  If no language is specified, the document\&#39;s original language is allowed to influence the summarizer\&#39;s output. Specifying a language will add an explicit translation step, to translate the summary to the desired language.  For example, if a document is mostly written in Spanish, the summary output may itself be in Spanish or contain Spanish passages. Specifying \&quot;EN\&quot; will ensure all passages are translated as English. 
-     * @param [cache] Whether to allow cached requests &amp; responses.
-     */
-    public summarizeTextWithHttpInfo(uploadText: UploadText, engine?: 'cecil' | 'agnes' | 'daphne' | 'muriel', summaryType?: 'summary' | 'takeaway', targetLanguage?: 'BG' | 'CS' | 'DA' | 'DE' | 'EL' | 'EN' | 'ES' | 'ET' | 'FI' | 'FR' | 'HU' | 'ID' | 'IT' | 'JA' | 'KO' | 'LT' | 'LV' | 'NB' | 'NL' | 'PL' | 'PT' | 'RO' | 'RU' | 'SK' | 'SL' | 'SV' | 'TR' | 'UK' | 'ZH' | 'ZH-HANT', cache?: boolean, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Summary>> {
-        const observableOptions = wrapOptions(_options);
-        const result = this.api.summarizeTextWithHttpInfo(uploadText, engine, summaryType, targetLanguage, cache, observableOptions);
-        return result.toPromise();
-    }
-
-    /**
-     * Upload text to summarize.
-     * @param uploadText Text to summarize
-     * @param [engine] Different summarization engines are provided that will give you choices over the \&quot;flavor\&quot; of the summarization text.
-     * @param [summaryType] Different summary types are provided that control the structure of the summary output.
-     * @param [targetLanguage] The summarizer can translate the output into a desired language, using the table of supported language codes below.  If no language is specified, the document\&#39;s original language is allowed to influence the summarizer\&#39;s output. Specifying a language will add an explicit translation step, to translate the summary to the desired language.  For example, if a document is mostly written in Spanish, the summary output may itself be in Spanish or contain Spanish passages. Specifying \&quot;EN\&quot; will ensure all passages are translated as English. 
-     * @param [cache] Whether to allow cached requests &amp; responses.
-     */
-    public summarizeText(uploadText: UploadText, engine?: 'cecil' | 'agnes' | 'daphne' | 'muriel', summaryType?: 'summary' | 'takeaway', targetLanguage?: 'BG' | 'CS' | 'DA' | 'DE' | 'EL' | 'EN' | 'ES' | 'ET' | 'FI' | 'FR' | 'HU' | 'ID' | 'IT' | 'JA' | 'KO' | 'LT' | 'LV' | 'NB' | 'NL' | 'PL' | 'PT' | 'RO' | 'RU' | 'SK' | 'SL' | 'SV' | 'TR' | 'UK' | 'ZH' | 'ZH-HANT', cache?: boolean, _options?: PromiseConfigurationOptions): Promise<Summary> {
-        const observableOptions = wrapOptions(_options);
-        const result = this.api.summarizeText(uploadText, engine, summaryType, targetLanguage, cache, observableOptions);
-        return result.toPromise();
-    }
-
-    /**
-     * Get a summary for a URL
-     * @param url A URL to a document to summarize.
-     * @param [engine] Different summarization engines are provided that will give you choices over the \&quot;flavor\&quot; of the summarization text.
-     * @param [summaryType] Different summary types are provided that control the structure of the summary output.
-     * @param [targetLanguage] The summarizer can translate the output into a desired language, using the table of supported language codes below.  If no language is specified, the document\&#39;s original language is allowed to influence the summarizer\&#39;s output. Specifying a language will add an explicit translation step, to translate the summary to the desired language.  For example, if a document is mostly written in Spanish, the summary output may itself be in Spanish or contain Spanish passages. Specifying \&quot;EN\&quot; will ensure all passages are translated as English. 
-     * @param [cache] Whether to allow cached requests &amp; responses.
-     */
-    public summarizeURLWithHttpInfo(url: string, engine?: 'cecil' | 'agnes' | 'daphne' | 'muriel', summaryType?: 'summary' | 'takeaway', targetLanguage?: 'BG' | 'CS' | 'DA' | 'DE' | 'EL' | 'EN' | 'ES' | 'ET' | 'FI' | 'FR' | 'HU' | 'ID' | 'IT' | 'JA' | 'KO' | 'LT' | 'LV' | 'NB' | 'NL' | 'PL' | 'PT' | 'RO' | 'RU' | 'SK' | 'SL' | 'SV' | 'TR' | 'UK' | 'ZH' | 'ZH-HANT', cache?: boolean, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Summary>> {
-        const observableOptions = wrapOptions(_options);
-        const result = this.api.summarizeURLWithHttpInfo(url, engine, summaryType, targetLanguage, cache, observableOptions);
-        return result.toPromise();
-    }
-
-    /**
-     * Get a summary for a URL
-     * @param url A URL to a document to summarize.
-     * @param [engine] Different summarization engines are provided that will give you choices over the \&quot;flavor\&quot; of the summarization text.
-     * @param [summaryType] Different summary types are provided that control the structure of the summary output.
-     * @param [targetLanguage] The summarizer can translate the output into a desired language, using the table of supported language codes below.  If no language is specified, the document\&#39;s original language is allowed to influence the summarizer\&#39;s output. Specifying a language will add an explicit translation step, to translate the summary to the desired language.  For example, if a document is mostly written in Spanish, the summary output may itself be in Spanish or contain Spanish passages. Specifying \&quot;EN\&quot; will ensure all passages are translated as English. 
-     * @param [cache] Whether to allow cached requests &amp; responses.
-     */
-    public summarizeURL(url: string, engine?: 'cecil' | 'agnes' | 'daphne' | 'muriel', summaryType?: 'summary' | 'takeaway', targetLanguage?: 'BG' | 'CS' | 'DA' | 'DE' | 'EL' | 'EN' | 'ES' | 'ET' | 'FI' | 'FR' | 'HU' | 'ID' | 'IT' | 'JA' | 'KO' | 'LT' | 'LV' | 'NB' | 'NL' | 'PL' | 'PT' | 'RO' | 'RU' | 'SK' | 'SL' | 'SV' | 'TR' | 'UK' | 'ZH' | 'ZH-HANT', cache?: boolean, _options?: PromiseConfigurationOptions): Promise<Summary> {
-        const observableOptions = wrapOptions(_options);
-        const result = this.api.summarizeURL(url, engine, summaryType, targetLanguage, cache, observableOptions);
         return result.toPromise();
     }
 

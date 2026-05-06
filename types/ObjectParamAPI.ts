@@ -7,9 +7,6 @@ import { ErrorDetail } from '../models/ErrorDetail';
 import { ErrorEnvelope } from '../models/ErrorEnvelope';
 import { ExtractRequest } from '../models/ExtractRequest';
 import { ExtractResponse } from '../models/ExtractResponse';
-import { FastGPT200Response } from '../models/FastGPT200Response';
-import { FastGPT200ResponseData } from '../models/FastGPT200ResponseData';
-import { FastGPTRequest } from '../models/FastGPTRequest';
 import { Meta } from '../models/Meta';
 import { PageInput } from '../models/PageInput';
 import { PageOutput } from '../models/PageOutput';
@@ -27,8 +24,6 @@ import { SearchRequestPersonalizationsDomainsInner } from '../models/SearchReque
 import { SearchRequestPersonalizationsRegexesInner } from '../models/SearchRequestPersonalizationsRegexesInner';
 import { SearchResult } from '../models/SearchResult';
 import { SearchResultImage } from '../models/SearchResultImage';
-import { Summary } from '../models/Summary';
-import { SummaryData } from '../models/SummaryData';
 import { Translate200Response } from '../models/Translate200Response';
 import { Translate200ResponseOneOf } from '../models/Translate200ResponseOneOf';
 import { Translate200ResponseOneOf1 } from '../models/Translate200ResponseOneOf1';
@@ -63,7 +58,6 @@ import { TranslateWordInsights200ResponseInsightsInner } from '../models/Transla
 import { TranslateWordInsights200ResponseInsightsInnerVariationsInner } from '../models/TranslateWordInsights200ResponseInsightsInnerVariationsInner';
 import { TranslateWordInsights400Response } from '../models/TranslateWordInsights400Response';
 import { TranslateWordInsights500Response } from '../models/TranslateWordInsights500Response';
-import { UploadText } from '../models/UploadText';
 
 import { ObservableEnrichmentApi } from "./ObservableAPI";
 import { EnrichmentApiRequestFactory, EnrichmentApiResponseProcessor} from "../apis/EnrichmentApi";
@@ -149,45 +143,6 @@ export class ObjectExtractApi {
 
 }
 
-import { ObservableFastGPTApi } from "./ObservableAPI";
-import { FastGPTApiRequestFactory, FastGPTApiResponseProcessor} from "../apis/FastGPTApi";
-
-export interface FastGPTApiFastGPTRequest {
-    /**
-     * Contains the query to process.
-     * @type FastGPTRequest
-     * @memberof FastGPTApifastGPT
-     */
-    fastGPTRequest: FastGPTRequest
-}
-
-export class ObjectFastGPTApi {
-    private api: ObservableFastGPTApi
-
-    public constructor(configuration: Configuration, requestFactory?: FastGPTApiRequestFactory, responseProcessor?: FastGPTApiResponseProcessor) {
-        this.api = new ObservableFastGPTApi(configuration, requestFactory, responseProcessor);
-    }
-
-    /**
-     * FastGPT is a Kagi service using powerful LLMs to answer user queries running a full search engine underneath. Think ChatGPT, but on steroids and faster! You can try the web app here.
-     * Answer a query.
-     * @param param the request object
-     */
-    public fastGPTWithHttpInfo(param: FastGPTApiFastGPTRequest, options?: ConfigurationOptions): Promise<HttpInfo<FastGPT200Response>> {
-        return this.api.fastGPTWithHttpInfo(param.fastGPTRequest,  options).toPromise();
-    }
-
-    /**
-     * FastGPT is a Kagi service using powerful LLMs to answer user queries running a full search engine underneath. Think ChatGPT, but on steroids and faster! You can try the web app here.
-     * Answer a query.
-     * @param param the request object
-     */
-    public fastGPT(param: FastGPTApiFastGPTRequest, options?: ConfigurationOptions): Promise<FastGPT200Response> {
-        return this.api.fastGPT(param.fastGPTRequest,  options).toPromise();
-    }
-
-}
-
 import { ObservableSearchApi } from "./ObservableAPI";
 import { SearchApiRequestFactory, SearchApiResponseProcessor} from "../apis/SearchApi";
 
@@ -221,125 +176,6 @@ export class ObjectSearchApi {
      */
     public search(param: SearchApiSearchRequest, options?: ConfigurationOptions): Promise<Search200Response> {
         return this.api.search(param.searchRequest,  options).toPromise();
-    }
-
-}
-
-import { ObservableSummarizerApi } from "./ObservableAPI";
-import { SummarizerApiRequestFactory, SummarizerApiResponseProcessor} from "../apis/SummarizerApi";
-
-export interface SummarizerApiSummarizeTextRequest {
-    /**
-     * Text to summarize
-     * @type UploadText
-     * @memberof SummarizerApisummarizeText
-     */
-    uploadText: UploadText
-    /**
-     * Different summarization engines are provided that will give you choices over the \&quot;flavor\&quot; of the summarization text.
-     * Defaults to: &#39;cecil&#39;
-     * @type &#39;cecil&#39; | &#39;agnes&#39; | &#39;daphne&#39; | &#39;muriel&#39;
-     * @memberof SummarizerApisummarizeText
-     */
-    engine?: 'cecil' | 'agnes' | 'daphne' | 'muriel'
-    /**
-     * Different summary types are provided that control the structure of the summary output.
-     * Defaults to: &#39;summary&#39;
-     * @type &#39;summary&#39; | &#39;takeaway&#39;
-     * @memberof SummarizerApisummarizeText
-     */
-    summaryType?: 'summary' | 'takeaway'
-    /**
-     * The summarizer can translate the output into a desired language, using the table of supported language codes below.  If no language is specified, the document\&#39;s original language is allowed to influence the summarizer\&#39;s output. Specifying a language will add an explicit translation step, to translate the summary to the desired language.  For example, if a document is mostly written in Spanish, the summary output may itself be in Spanish or contain Spanish passages. Specifying \&quot;EN\&quot; will ensure all passages are translated as English. 
-     * Defaults to: undefined
-     * @type &#39;BG&#39; | &#39;CS&#39; | &#39;DA&#39; | &#39;DE&#39; | &#39;EL&#39; | &#39;EN&#39; | &#39;ES&#39; | &#39;ET&#39; | &#39;FI&#39; | &#39;FR&#39; | &#39;HU&#39; | &#39;ID&#39; | &#39;IT&#39; | &#39;JA&#39; | &#39;KO&#39; | &#39;LT&#39; | &#39;LV&#39; | &#39;NB&#39; | &#39;NL&#39; | &#39;PL&#39; | &#39;PT&#39; | &#39;RO&#39; | &#39;RU&#39; | &#39;SK&#39; | &#39;SL&#39; | &#39;SV&#39; | &#39;TR&#39; | &#39;UK&#39; | &#39;ZH&#39; | &#39;ZH-HANT&#39;
-     * @memberof SummarizerApisummarizeText
-     */
-    targetLanguage?: 'BG' | 'CS' | 'DA' | 'DE' | 'EL' | 'EN' | 'ES' | 'ET' | 'FI' | 'FR' | 'HU' | 'ID' | 'IT' | 'JA' | 'KO' | 'LT' | 'LV' | 'NB' | 'NL' | 'PL' | 'PT' | 'RO' | 'RU' | 'SK' | 'SL' | 'SV' | 'TR' | 'UK' | 'ZH' | 'ZH-HANT'
-    /**
-     * Whether to allow cached requests &amp; responses.
-     * Defaults to: true
-     * @type boolean
-     * @memberof SummarizerApisummarizeText
-     */
-    cache?: boolean
-}
-
-export interface SummarizerApiSummarizeURLRequest {
-    /**
-     * A URL to a document to summarize.
-     * Defaults to: undefined
-     * @type string
-     * @memberof SummarizerApisummarizeURL
-     */
-    url: string
-    /**
-     * Different summarization engines are provided that will give you choices over the \&quot;flavor\&quot; of the summarization text.
-     * Defaults to: &#39;cecil&#39;
-     * @type &#39;cecil&#39; | &#39;agnes&#39; | &#39;daphne&#39; | &#39;muriel&#39;
-     * @memberof SummarizerApisummarizeURL
-     */
-    engine?: 'cecil' | 'agnes' | 'daphne' | 'muriel'
-    /**
-     * Different summary types are provided that control the structure of the summary output.
-     * Defaults to: &#39;summary&#39;
-     * @type &#39;summary&#39; | &#39;takeaway&#39;
-     * @memberof SummarizerApisummarizeURL
-     */
-    summaryType?: 'summary' | 'takeaway'
-    /**
-     * The summarizer can translate the output into a desired language, using the table of supported language codes below.  If no language is specified, the document\&#39;s original language is allowed to influence the summarizer\&#39;s output. Specifying a language will add an explicit translation step, to translate the summary to the desired language.  For example, if a document is mostly written in Spanish, the summary output may itself be in Spanish or contain Spanish passages. Specifying \&quot;EN\&quot; will ensure all passages are translated as English. 
-     * Defaults to: undefined
-     * @type &#39;BG&#39; | &#39;CS&#39; | &#39;DA&#39; | &#39;DE&#39; | &#39;EL&#39; | &#39;EN&#39; | &#39;ES&#39; | &#39;ET&#39; | &#39;FI&#39; | &#39;FR&#39; | &#39;HU&#39; | &#39;ID&#39; | &#39;IT&#39; | &#39;JA&#39; | &#39;KO&#39; | &#39;LT&#39; | &#39;LV&#39; | &#39;NB&#39; | &#39;NL&#39; | &#39;PL&#39; | &#39;PT&#39; | &#39;RO&#39; | &#39;RU&#39; | &#39;SK&#39; | &#39;SL&#39; | &#39;SV&#39; | &#39;TR&#39; | &#39;UK&#39; | &#39;ZH&#39; | &#39;ZH-HANT&#39;
-     * @memberof SummarizerApisummarizeURL
-     */
-    targetLanguage?: 'BG' | 'CS' | 'DA' | 'DE' | 'EL' | 'EN' | 'ES' | 'ET' | 'FI' | 'FR' | 'HU' | 'ID' | 'IT' | 'JA' | 'KO' | 'LT' | 'LV' | 'NB' | 'NL' | 'PL' | 'PT' | 'RO' | 'RU' | 'SK' | 'SL' | 'SV' | 'TR' | 'UK' | 'ZH' | 'ZH-HANT'
-    /**
-     * Whether to allow cached requests &amp; responses.
-     * Defaults to: true
-     * @type boolean
-     * @memberof SummarizerApisummarizeURL
-     */
-    cache?: boolean
-}
-
-export class ObjectSummarizerApi {
-    private api: ObservableSummarizerApi
-
-    public constructor(configuration: Configuration, requestFactory?: SummarizerApiRequestFactory, responseProcessor?: SummarizerApiResponseProcessor) {
-        this.api = new ObservableSummarizerApi(configuration, requestFactory, responseProcessor);
-    }
-
-    /**
-     * Upload text to summarize.
-     * @param param the request object
-     */
-    public summarizeTextWithHttpInfo(param: SummarizerApiSummarizeTextRequest, options?: ConfigurationOptions): Promise<HttpInfo<Summary>> {
-        return this.api.summarizeTextWithHttpInfo(param.uploadText, param.engine, param.summaryType, param.targetLanguage, param.cache,  options).toPromise();
-    }
-
-    /**
-     * Upload text to summarize.
-     * @param param the request object
-     */
-    public summarizeText(param: SummarizerApiSummarizeTextRequest, options?: ConfigurationOptions): Promise<Summary> {
-        return this.api.summarizeText(param.uploadText, param.engine, param.summaryType, param.targetLanguage, param.cache,  options).toPromise();
-    }
-
-    /**
-     * Get a summary for a URL
-     * @param param the request object
-     */
-    public summarizeURLWithHttpInfo(param: SummarizerApiSummarizeURLRequest, options?: ConfigurationOptions): Promise<HttpInfo<Summary>> {
-        return this.api.summarizeURLWithHttpInfo(param.url, param.engine, param.summaryType, param.targetLanguage, param.cache,  options).toPromise();
-    }
-
-    /**
-     * Get a summary for a URL
-     * @param param the request object
-     */
-    public summarizeURL(param: SummarizerApiSummarizeURLRequest, options?: ConfigurationOptions): Promise<Summary> {
-        return this.api.summarizeURL(param.url, param.engine, param.summaryType, param.targetLanguage, param.cache,  options).toPromise();
     }
 
 }
