@@ -22,7 +22,7 @@ export class ExtractRequest {
     */
     'pages': Array<PageInput>;
     /**
-    * Optional timeout in seconds for the extraction operation
+    * Optional timeout in seconds for the extraction operation. Out of range values will be clamped back within range.  All URLs are fetched concurrently. This timeout applies a time budget for the entire bulk fetch operation. 
     */
     'timeout'?: number;
     /**

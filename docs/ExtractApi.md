@@ -30,7 +30,7 @@ const request: ExtractApiExtractContentRequest = {
         url: "https://example.com/article",
       },
     ],
-    timeout: 30,
+    timeout: 1.337,
     format: "json",
   },
 };
