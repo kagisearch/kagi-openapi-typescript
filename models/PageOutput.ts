@@ -21,9 +21,13 @@ export class PageOutput {
     */
     'url': string;
     /**
-    * Extracted markdown content of the page
+    * Extracted markdown content of the page. Will be absent if extraction fails.
     */
     'markdown'?: string | null;
+    /**
+    * If extraction fails, a string describing the reason why.
+    */
+    'error'?: string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -39,6 +43,12 @@ export class PageOutput {
         {
             "name": "markdown",
             "baseName": "markdown",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "error",
+            "baseName": "error",
             "type": "string",
             "format": ""
         }    ];
